@@ -46,6 +46,7 @@
 </li>
 <li><a class="reference internal" href="#openstack">Компоненты Openstack</a><ul>
 <li><a class="reference internal" href="#quantum">Quantum</a></li>
+<li><a class="reference internal" href="#ceph">CEPH</a></li>
 </ul>
 </li>
 </ul>
@@ -85,7 +86,19 @@
 </div>
 <div class="section" id="openstack">
 <h1>Компоненты Openstack<a class="headerlink" href="#openstack" title="Ссылка на этот заголовок">¶</a></h1>
-<p><a class="reference external" href="http://www.openstack.org/">OpenStack</a> — это комплекс проектов свободного программного обеспечения, которое может быть использовано для создания вычислительных облаков и облачных хранилищ, как публичных, так и приватных (работающих только для обеспечения внутренних нужд компании). Эти проекты распространяются под лицензией Apache License.</p>
+<p><a class="reference external" href="http://www.openstack.org/">OpenStack</a> — это комплекс проектов свободного (<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.</p>
+<p>На данный момент OpenStack содержит семь ключевых компонентов:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Сервис авторизации и аутентификации &#8216;Keystone&#8217;</li>
+<li>Хранилище образов &#8216;Glance&#8217;</li>
+<li>Вычислительный сервис &#8216;Nova&#8217;</li>
+<li>Сетевой сервис Quantum</li>
+<li>Сервис хранения блоков данных &#8216;Cinder&#8217;</li>
+<li>Хранилище объектов &#8216;Swift&#8217;</li>
+<li>Веб-интерфейс &#8216;Horizon&#8217;</li>
+</ul>
+</div></blockquote>
 <p>Установка сервисов OpenStack будет производиться из пакетов, на основе операционной системы Ubuntu 12.04 «Precise», c использованием системы автоматизации процесса установки и настройки программного обеспечения Chef.</p>
 <p>В данном руководстве рассмаривается структура облака, когда все облачные сервисы, кроме вычислительного, расположены на одном узле, называемом &#8220;контроллером облака&#8221;, к которому по локальной сети подключаются вычислительные узлы.</p>
 <p>Вычислительный сервис nova-compute использует гипервизор <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">KVM</a></p>
@@ -140,10 +153,10 @@ iface br-int inet static
 <p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">rubygems</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">gem-install</span> <span class="pre">knife-solo</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">knife</span> <span class="pre">configure</span> <span class="pre">-r</span> <span class="pre">.defaults</span></tt></p>
-<div class="figure">
+<div class="text figure align-center">
 <img alt="_images/first.png" src="_images/first.png" />
 </div>
-<div class="figure">
+<div class="figure" style="width: 100">
 <img alt="_images/second.png" src="_images/second.png" />
 </div>
 <p>Используемые скрипты для chef расчитаны на использование на будующих узлах облачной инфраструктуры опреационной системы Ubuntu версии 12.04, и налагает следующие требования:</p>
@@ -165,7 +178,7 @@ iface br-int inet static
 <p>и аутентифицироваться с помощью openrc файла для нужного проекта, который можно загрузить через Web-интерфейс, на вкладке settings</p>
 <div class="admonition note">
 <p class="first admonition-title">Примечание</p>
-<p class="last">Добавьте в файл openrc строчку export OS_NO_CACHE=1 это избавит Вас от необходимости каждый раз вводить пароль связки ключей, при использовании последней версии клиента</p>
+<p class="last">Добавьте в файл openrc строчку <strong>export OS_NO_CACHE=1</strong> это избавит Вас от необходимости каждый раз вводить пароль связки ключей, при использовании последней версии клиента</p>
 </div>
 <p>После загрузки файла выполните команду:</p>
 <p><tt class="docutils literal"><span class="pre">source</span> <span class="pre">openrc.sh</span></tt></p>
@@ -229,6 +242,13 @@ ping-timer-rem
 persist-tun
 persist-key</pre>
 </div>
+</div>
+<div class="section" id="ceph">
+<h2>CEPH<a class="headerlink" href="#ceph" title="Ссылка на этот заголовок">¶</a></h2>
+<p><a class="reference external" href="http://ceph.com">Ceph</a> — свободная распределённая файловая система. Ceph может использоваться на системах, состоящих как из нескольких машин, так и из тысяч узлов. Общий объем хранилища данных может измеряться петабайтами, встроенные механизмы продублированной репликации данных (не зависит от отказа отдельных узлов) обеспечивают чрезвычайно высокую живучесть системы, при добавлении или удалении новых узлов, массив данных автоматически перебалансируется с учетом новшеств.</p>
+<p>Установка</p>
+<p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--keyserver</span> <span class="pre">keyserver.ubuntu.com</span> <span class="pre">--recv</span> <span class="pre">17ED316D</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">--armor</span> <span class="pre">17ED316D</span> <span class="pre">|</span> <span class="pre">apt-key</span> <span class="pre">add</span> <span class="pre">-</span></tt></p>
 </div>
 </div>
 
