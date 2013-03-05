@@ -1,4 +1,0 @@
-\select@language {russian}
-\contentsline {chapter}{\numberline {1}\IeC {\CYRK }\IeC {\cyro }\IeC {\cyrm }\IeC {\cyrp }\IeC {\cyro }\IeC {\cyrn }\IeC {\cyre }\IeC {\cyrn }\IeC {\cyrt }\IeC {\cyrery } Openstack}{1}{chapter.1}
-\contentsline {section}{\numberline {1.1}Quantum}{1}{section.1.1}
-\contentsline {section}{\numberline {1.2}CEPH}{7}{section.1.2}
