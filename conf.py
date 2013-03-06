@@ -10,7 +10,6 @@
 #
 # All configuration values have a default; values that are commented out
 # serve to show the default.
-import sphinx_bootstrap_theme
 import sys, os
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -40,7 +39,7 @@ language = 'ru'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'index'
+master_doc = 'README'
 
 # General information about the project.
 project = u'openstack'
