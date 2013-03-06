@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Руководство по установке и настройке OpenStack ‘Grizzly’ &mdash; openstack 1.0 documentation</title>
+    <title>Руководство по установке и настройке OpenStack &mdash; openstack 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -67,22 +67,45 @@
 </ul>
 </li>
             <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Навигация <b class="caret"></b></a>
   <ul class="dropdown-menu localtoc"><ul>
-<li><a class="reference internal" href="#">Руководство по установке и настройке OpenStack &#8216;Grizzly&#8217;</a><ul>
-<li><a class="reference internal" href="#openstack">Компоненты Openstack</a></li>
-<li><a class="reference internal" href="#quantum">Quantum</a></li>
-<li><a class="reference internal" href="#ceph">CEPH</a></li>
+<li><a class="reference internal" href="#">Руководство по установке и настройке OpenStack</a><ul>
+<li><a class="reference internal" href="#id2">Подготовка к установке</a><ul>
+<li><a class="reference internal" href="#id3">Структура облака</a></li>
+<li><a class="reference internal" href="#id4">Подготовка узлов</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#grizzly">Grizzly</a><ul>
-<li><a class="reference internal" href="#keystone">Keystone</a></li>
-<li><a class="reference internal" href="#glance">Glance</a></li>
-<li><a class="reference internal" href="#nova">Nova</a></li>
-<li><a class="reference internal" href="#cinder">Cinder</a></li>
-<li><a class="reference internal" href="#dashboard">Dashboard</a></li>
-<li><a class="reference internal" href="#nova-compute">nova-compute</a></li>
-<li><a class="reference internal" href="#id4">Quantum</a></li>
+<li><a class="reference internal" href="#ceph">CEPH</a></li>
+<li><a class="reference internal" href="#keystone">Keystone</a><ul>
+<li><a class="reference internal" href="#id8">Установка</a></li>
+<li><a class="reference internal" href="#id9">Использование</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#glance">Glance</a><ul>
+<li><a class="reference internal" href="#id11">Установка</a></li>
+<li><a class="reference internal" href="#id12">Команды Glance</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#nova">Nova</a><ul>
+<li><a class="reference internal" href="#id14">Установка</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#cinder">Cinder</a><ul>
+<li><a class="reference internal" href="#id16">Установка</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dashboard">Dashboard</a><ul>
+<li><a class="reference internal" href="#id17">Установка</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#quantum">Quantum</a><ul>
+<li><a class="reference internal" href="#id19">Установка</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#swift">Swift</a><ul>
+<li><a class="reference internal" href="#id21">Установка</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -92,13 +115,13 @@
           
             
           
-          
+         <!--  -->
         </ul>
 
         
           
 <form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
-  <input type="text" name="q" placeholder="Search" />
+  <input type="text" name="q" placeholder="Поиск" />
   <input type="hidden" name="check_keywords" value="yes" />
   <input type="hidden" name="area" value="default" />
 </form>
@@ -108,38 +131,54 @@
   </div>
 
   
-  <div class="section" id="openstack-grizzly">
-<h1>Руководство по установке и настройке OpenStack &#8216;Grizzly&#8217;<a class="headerlink" href="#openstack-grizzly" title="Ссылка на этот заголовок">¶</a></h1>
-<div class="toctree-wrapper compound">
+  <div class="section" id="openstack">
+<h1>Руководство по установке и настройке OpenStack<a class="headerlink" href="#openstack" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="toctree-wrapper compound" id="contents">
 <ul class="simple">
 </ul>
 </div>
 <div class="figure align-right">
 <a class="reference internal image-reference" href="_images/openstack.png"><img alt="_images/openstack.png" src="_images/openstack.png" style="width: 323.2px; height: 204.8px;" /></a>
 </div>
-<div class="section" id="openstack">
-<h2>Компоненты Openstack<a class="headerlink" href="#openstack" title="Ссылка на этот заголовок">¶</a></h2>
 <p><a class="reference external" href="http://www.openstack.org/">OpenStack</a> — это комплекс проектов свободного (<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.</p>
 <p>На данный момент OpenStack содержит семь ключевых компонентов:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Сервис авторизации и аутентификации «Keystone»</li>
-<li>Хранилище образов «Glance»</li>
-<li>Вычислительный сервис «Nova»</li>
-<li>Сетевой сервис Quantum</li>
-<li>Сервис хранения блоков данных «Cinder»</li>
-<li>Хранилище объектов «Swift»</li>
-<li>Веб-интерфейс «Horizon»</li>
+<li><a class="reference internal" href="#keystone"><em>Сервис авторизации и аутентификации «Keystone»</em></a></li>
+<li><a class="reference internal" href="#glance"><em>Хранилище образов «Glance»</em></a></li>
+<li><a class="reference internal" href="#nova"><em>Вычислительный сервис «Nova»</em></a></li>
+<li><a class="reference internal" href="#quantum"><em>Сетевой сервис Quantum</em></a></li>
+<li><a class="reference internal" href="#cinder"><em>Сервис хранения блоков данных «Cinder»</em></a></li>
+<li><a class="reference internal" href="#swift"><em>Хранилище объектов «Swift»</em></a></li>
+<li><a class="reference internal" href="#horizon"><em>Веб-интерфейс «Horizon»</em></a></li>
 </ul>
 </div></blockquote>
+<p>В данное руководство включена так же установка</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#link"><em>Распределенной файловой системы CEPH</em></a></li>
+<li>Cистемы мониторинга Munin</li>
+<li>Сервера доменных имен MyDNS</li>
+</ul>
+</div></blockquote>
+<div class="section" id="id2">
+<h2>Подготовка к установке<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id3">
+<h3>Структура облака<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
+<div class="figure align-center">
+<img alt="_images/first.png" src="_images/first.png" />
+</div>
+</div>
+<div class="section" id="id4">
+<h3>Подготовка узлов<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h3>
+<div class="figure align-right">
+<a class="reference internal image-reference" href="_images/ubuntu.png"><img alt="_images/ubuntu.png" src="_images/ubuntu.png" style="width: 300.2px; height: 78.2px;" /></a>
+</div>
 <p>Установка сервисов OpenStack будет производиться из пакетов, на основе операционной системы Ubuntu 12.04 «Precise», c использованием системы автоматизации процесса установки и настройки программного обеспечения Chef.</p>
 <p>В данном руководстве рассмаривается структура облака, когда все облачные сервисы, кроме вычислительного, расположены на одном узле, называемом &#8220;контроллером облака&#8221;, к которому по локальной сети подключаются вычислительные узлы.</p>
 <p>Вычислительный сервис nova-compute использует гипервизор <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">KVM</a></p>
 <p>Публичным и приватным адресам вируальных машин с использованием <a class="reference external" href="http://mydns.bboy.net/">MyDns</a> автоматически выдаются доменные имена.</p>
 <p>Хранилища образов, дисков виртуальных машин и объектов располагаются на LVM томах.</p>
-</div>
-<div class="section" id="quantum">
-<h2>Quantum<a class="headerlink" href="#quantum" title="Ссылка на этот заголовок">¶</a></h2>
 <div class="figure align-center">
 <img alt="_images/quantum.png" src="_images/quantum.png" />
 </div>
@@ -164,12 +203,6 @@ iface br-int inet static
 <p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">rubygems</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">gem-install</span> <span class="pre">knife-solo</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">knife</span> <span class="pre">configure</span> <span class="pre">-r</span> <span class="pre">.defaults</span></tt></p>
-<div class="figure align-center">
-<img alt="_images/first.png" src="_images/first.png" />
-</div>
-<div class="figure align-center">
-<img alt="_images/second.png" src="_images/second.png" />
-</div>
 <p>Используемые скрипты для chef расчитаны на использование на будующих узлах облачной инфраструктуры опреационной системы Ubuntu версии 12.04, и налагает следующие требования:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="nb">set</span><span class="p">[:</span><span class="n">mysql</span><span class="p">][:</span><span class="n">password</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;mySuperSecret&quot;</span>
 
@@ -254,16 +287,16 @@ persist-tun
 persist-key</pre>
 </div>
 </div>
+</div>
 <div class="section" id="ceph">
-<h2>CEPH<a class="headerlink" href="#ceph" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="link"></span><h2>CEPH<a class="headerlink" href="#ceph" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="figure align-right">
+<a class="reference internal image-reference" href="_images/ceph.png"><img alt="_images/ceph.png" src="_images/ceph.png" style="width: 126.0px; height: 126.0px;" /></a>
+</div>
 <p><a class="reference external" href="http://ceph.com">Ceph</a> — свободная распределённая файловая система. Ceph может использоваться на системах, состоящих как из нескольких машин, так и из тысяч узлов. Общий объем хранилища данных может измеряться петабайтами, встроенные механизмы продублированной репликации данных (не зависит от отказа отдельных узлов) обеспечивают чрезвычайно высокую живучесть системы, при добавлении или удалении новых узлов, массив данных автоматически перебалансируется с учетом новшеств.</p>
 <p>Установка</p>
 <p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--keyserver</span> <span class="pre">keyserver.ubuntu.com</span> <span class="pre">--recv</span> <span class="pre">17ED316D</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">--armor</span> <span class="pre">17ED316D</span> <span class="pre">|</span> <span class="pre">apt-key</span> <span class="pre">add</span> <span class="pre">-</span></tt></p>
-</div>
-</div>
-<div class="section" id="grizzly">
-<h1>Grizzly<a class="headerlink" href="#grizzly" title="Ссылка на этот заголовок">¶</a></h1>
 <p>Необходимо добавить репозиторий &#8220;Grizzly&#8221;</p>
 <p><tt class="docutils literal"><span class="pre">echo</span> <span class="pre">&quot;deb</span> <span class="pre">http://ppa.launchpad.net/openstack-ubuntu-testing/grizzly-trunk-testing/ubuntu/</span> <span class="pre">precise</span> <span class="pre">main&quot;</span> <span class="pre">&gt;&gt;</span> <span class="pre">/etc/apt/sources.list</span></tt></p>
 <p>Получение ключа</p>
@@ -278,8 +311,11 @@ persist-key</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">mysql</span> <span class="pre">restart</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">rabbitmq-server</span></tt></p>
+</div>
 <div class="section" id="keystone">
-<h2>Keystone<a class="headerlink" href="#keystone" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="id7"></span><h2>Keystone<a class="headerlink" href="#keystone" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id8">
+<h3>Установка<a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">keystone</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">keystone;&quot;</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;GRANT</span> <span class="pre">ALL</span> <span class="pre">PRIVILEGES</span> <span class="pre">ON</span> <span class="pre">*.*</span> <span class="pre">TO</span> <span class="pre">'root'&#64;'%'</span> <span class="pre">IDENTIFIED</span> <span class="pre">BY</span> <span class="pre">'MysqlPass';&quot;</span></tt></p>
@@ -428,7 +464,9 @@ catalog.RegionOne.object_store.name = S3 Service</pre>
 <p class="first admonition-title">Примечание</p>
 <p class="last">Здесь и далее <strong>195.208.117.140</strong> ip-адрес сетевого интерфейса контроллера облака во внешней сети</p>
 </div>
-<p>Проверка работы сервиса keystone</p>
+</div>
+<div class="section" id="id9">
+<h3>Использование<a class="headerlink" href="#id9" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-list</span></tt></p>
 <div class="highlight-python"><pre>+----------------------------------+--------+---------+-----------------+
 |                id                |  name  | enabled |      email      |
@@ -438,8 +476,11 @@ catalog.RegionOne.object_store.name = S3 Service</pre>
 +----------------------------------+--------+---------+-----------------+</pre>
 </div>
 </div>
+</div>
 <div class="section" id="glance">
-<h2>Glance<a class="headerlink" href="#glance" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="id10"></span><h2>Glance<a class="headerlink" href="#glance" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id11">
+<h3>Установка<a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">glance</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">glance;&quot;</span></tt></p>
 <p>В конфигурационных файлах /etc/glance glance-api.conf и /etc/glance/glance-registry.conf необходимо изменить:</p>
@@ -466,6 +507,9 @@ flavor = keystone</pre>
 </div>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pip</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">warlock</span> <span class="pre">--upgrade</span></tt></p>
+</div>
+<div class="section" id="id12">
+<h3>Команды Glance<a class="headerlink" href="#id12" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Загрузка тестового образа</p>
 <p><tt class="docutils literal"><span class="pre">glance</span> <span class="pre">image-create</span> <span class="pre">--name</span> <span class="pre">cirros-0.3.0</span> <span class="pre">--is-public</span> <span class="pre">true</span> <span class="pre">--container-format</span> <span class="pre">bare</span> <span class="pre">--disk-format</span> <span class="pre">qcow2</span> <span class="pre">--copy-from</span> <span class="pre">https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</span></tt></p>
 <div class="admonition note">
@@ -473,8 +517,11 @@ flavor = keystone</pre>
 <p class="last">Для тестового образа cirros-0.3.0 помимо ssh-ключа для авторизации можно использовать  логин <strong>cirros</strong> и пароль <strong>cubswin:)</strong></p>
 </div>
 </div>
+</div>
 <div class="section" id="nova">
-<h2>Nova<a class="headerlink" href="#nova" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="id13"></span><h2>Nova<a class="headerlink" href="#nova" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id14">
+<h3>Установка<a class="headerlink" href="#id14" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">nova-api</span> <span class="pre">nova-cert</span> <span class="pre">novnc</span> <span class="pre">nova-consoleauth</span> <span class="pre">nova-scheduler</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">nova;&quot;</span></tt></p>
 <p>В файле /etc/nova/api-paste.ini:</p>
@@ -545,6 +592,7 @@ osapi_volume_listen_port=5900</pre>
 </div>
 <p>Синхронизация с базой</p>
 <p><tt class="docutils literal"><span class="pre">nova-manage</span> <span class="pre">db_sync</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">kvm</span> <span class="pre">libvirt-bin</span> <span class="pre">pm-utils</span> <span class="pre">nova-conductor</span></tt></p>
 <p>Перезапуск сервисов</p>
 <p><tt class="docutils literal"><span class="pre">find</span> <span class="pre">/etc/init.d</span> <span class="pre">-name</span> <span class="pre">nova*</span> <span class="pre">-exec</span> <span class="pre">{}</span> <span class="pre">restart</span> <span class="pre">\;</span></tt></p>
 <div class="admonition hint">
@@ -552,8 +600,11 @@ osapi_volume_listen_port=5900</pre>
 <p class="last">Посмотреть список работающих сервисов Nova можно командой nova-manage service list</p>
 </div>
 </div>
+</div>
 <div class="section" id="cinder">
-<h2>Cinder<a class="headerlink" href="#cinder" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="id15"></span><h2>Cinder<a class="headerlink" href="#cinder" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id16">
+<h3>Установка<a class="headerlink" href="#id16" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">cinder-api</span> <span class="pre">cinder-scheduler</span> <span class="pre">cinder-volume</span> <span class="pre">iscsitarget</span> <span class="pre">open-iscsi</span> <span class="pre">iscsitarget-dkms</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">sed</span> <span class="pre">-i</span> <span class="pre">'s/false/true/g'</span> <span class="pre">/etc/default/iscsitarget</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">iscsitarget</span> <span class="pre">start</span></tt></p>
@@ -594,18 +645,27 @@ volumes_dir = /var/lib/cinder/volumes</pre>
 <p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">cinder-volume</span> <span class="pre">restart</span></tt></p>
 <p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">cinder-api</span> <span class="pre">restart</span></tt></p>
 </div>
+</div>
 <div class="section" id="dashboard">
-<h2>Dashboard<a class="headerlink" href="#dashboard" title="Ссылка на этот заголовок">¶</a></h2>
+<span id="horizon"></span><h2>Dashboard<a class="headerlink" href="#dashboard" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id17">
+<h3>Установка<a class="headerlink" href="#id17" title="Ссылка на этот заголовок">¶</a></h3>
 <p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">openstack-dashboard</span> <span class="pre">memcached</span> <span class="pre">node-less</span></tt></p>
 </div>
-<div class="section" id="nova-compute">
-<h2>nova-compute<a class="headerlink" href="#nova-compute" title="Ссылка на этот заголовок">¶</a></h2>
-<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">kvm</span> <span class="pre">libvirt-bin</span> <span class="pre">pm-utils</span> <span class="pre">nova-conductor</span></tt></p>
 </div>
-<div class="section" id="id4">
-<h2>Quantum<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="quantum">
+<span id="id18"></span><h2>Quantum<a class="headerlink" href="#quantum" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id19">
+<h3>Установка<a class="headerlink" href="#id19" title="Ссылка на этот заголовок">¶</a></h3>
 <blockquote>
 <div>pip install cliff &#8211;upgrade</div></blockquote>
+</div>
+</div>
+<div class="section" id="swift">
+<span id="id20"></span><h2>Swift<a class="headerlink" href="#swift" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="section" id="id21">
+<h3>Установка<a class="headerlink" href="#id21" title="Ссылка на этот заголовок">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -614,17 +674,16 @@ volumes_dir = /var/lib/cinder/volumes</pre>
 <footer class="footer">
   <div class="container">
     <p class="pull-right">
-      <a href="#">Back to top</a>
-      
+      <a href="#">Наверх</a>
+      <!--
         <br/>
         
   <a href="_sources/README.txt"
-     rel="nofollow">Source</a>
-      
+     rel="nofollow">Исходный код</a>
+       -->
     </p>
     <p>
         &copy; Copyright 2013, Леонид Лабошин.<br/>
-      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
     </p>
   </div>
 </footer>

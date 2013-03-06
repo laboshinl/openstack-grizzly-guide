@@ -30,9 +30,9 @@
           {% block sidebarrel %}
             {% include "relations.html" %}
           {% endblock %}
-          {% if theme_source_link_position == "nav" %}
+         <!-- {% if theme_source_link_position == "nav" %}
             <li>{% include "sourcelink.html" %}</li>
-          {% endif %}
+          {% endif %} -->
         </ul>
 
         {% block sidebarsearch %}
@@ -69,11 +69,11 @@
 <footer class="footer">
   <div class="container">
     <p class="pull-right">
-      <a href="#">Back to top</a>
-      {% if theme_source_link_position == "footer" %}
+      <a href="#">Наверх</a>
+      <!--{% if theme_source_link_position == "footer" %}
         <br/>
         {% include "sourcelink.html" %}
-      {% endif %}
+      {% endif %} -->
     </p>
     <p>
     {%- if show_copyright %}
@@ -85,9 +85,6 @@
     {%- endif %}
     {%- if last_updated %}
       {% trans last_updated=last_updated|e %}Last updated on {{ last_updated }}.{% endtrans %}<br/>
-    {%- endif %}
-    {%- if show_sphinx %}
-      {% trans sphinx_version=sphinx_version|e %}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{% endtrans %}<br/>
     {%- endif %}
     </p>
   </div>
