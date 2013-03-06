@@ -1,0 +1,632 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Руководство по установке и настройке OpenStack ‘Grizzly’ &mdash; openstack 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-2.3.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="openstack 1.0 documentation" href="index.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+<div class="container">
+  
+  <div id="navbar" class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+      <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <a class="brand" href="#">OpenStack</a>
+      <span class="navbar-text pull-left"><b>Grizzly</b></span>
+
+      <div class="nav-collapse">
+        <ul class="nav">
+          <li class="divider-vertical"></li>
+          
+            <li class="dropdown globaltoc-container">
+  <a href="#"
+     class="dropdown-toggle"
+     data-toggle="dropdown">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+    ><ul class="simple">
+</ul>
+</ul>
+</li>
+            <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Руководство по установке и настройке OpenStack &#8216;Grizzly&#8217;</a><ul>
+<li><a class="reference internal" href="#openstack">Компоненты Openstack</a></li>
+<li><a class="reference internal" href="#quantum">Quantum</a></li>
+<li><a class="reference internal" href="#ceph">CEPH</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#grizzly">Grizzly</a><ul>
+<li><a class="reference internal" href="#keystone">Keystone</a></li>
+<li><a class="reference internal" href="#glance">Glance</a></li>
+<li><a class="reference internal" href="#nova">Nova</a></li>
+<li><a class="reference internal" href="#cinder">Cinder</a></li>
+<li><a class="reference internal" href="#dashboard">Dashboard</a></li>
+<li><a class="reference internal" href="#nova-compute">nova-compute</a></li>
+<li><a class="reference internal" href="#id4">Quantum</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+          
+          
+            
+          
+          
+        </ul>
+
+        
+          
+<form class="navbar-search pull-right" style="margin-bottom:-3px;" action="search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="section" id="openstack-grizzly">
+<h1>Руководство по установке и настройке OpenStack &#8216;Grizzly&#8217;<a class="headerlink" href="#openstack-grizzly" title="Ссылка на этот заголовок">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="openstack">
+<h2>Компоненты Openstack<a class="headerlink" href="#openstack" title="Ссылка на этот заголовок">¶</a></h2>
+<a class="reference internal image-reference" href="_images/kvm.png"><img alt="_images/kvm.png" src="_images/kvm.png" style="width: 199.9px; height: 63.3px;" /></a>
+<a class="reference internal image-reference" href="_images/openstack.png"><img alt="_images/openstack.png" src="_images/openstack.png" style="width: 323.2px; height: 204.8px;" /></a>
+<a class="reference internal image-reference" href="_images/ceph.png"><img alt="_images/ceph.png" src="_images/ceph.png" style="width: 105.0px; height: 105.0px;" /></a>
+<p><a class="reference external" href="http://www.openstack.org/">OpenStack</a> — это комплекс проектов свободного (<a class="reference external" href="http://www.apache.org/licenses/LICENSE-2.0">Apache License, Version 2.0</a>) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.</p>
+<p>На данный момент OpenStack содержит семь ключевых компонентов:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Сервис авторизации и аутентификации «Keystone»</li>
+<li>Хранилище образов «Glance»</li>
+<li>Вычислительный сервис «Nova»</li>
+<li>Сетевой сервис Quantum</li>
+<li>Сервис хранения блоков данных «Cinder»</li>
+<li>Хранилище объектов «Swift»</li>
+<li>Веб-интерфейс «Horizon»</li>
+</ul>
+</div></blockquote>
+<p>Установка сервисов OpenStack будет производиться из пакетов, на основе операционной системы Ubuntu 12.04 «Precise», c использованием системы автоматизации процесса установки и настройки программного обеспечения Chef.</p>
+<p>В данном руководстве рассмаривается структура облака, когда все облачные сервисы, кроме вычислительного, расположены на одном узле, называемом &#8220;контроллером облака&#8221;, к которому по локальной сети подключаются вычислительные узлы.</p>
+<p>Вычислительный сервис nova-compute использует гипервизор <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">KVM</a></p>
+<p>Публичным и приватным адресам вируальных машин с использованием <a class="reference external" href="http://mydns.bboy.net/">MyDns</a> автоматически выдаются доменные имена.</p>
+<p>Хранилища образов, дисков виртуальных машин и объектов располагаются на LVM томах.</p>
+</div>
+<div class="section" id="quantum">
+<h2>Quantum<a class="headerlink" href="#quantum" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="figure align-center">
+<img alt="_images/quantum.png" src="_images/quantum.png" />
+</div>
+<p>За работу с сетевой частью OpenStack отвечает библиотека Quantum, которая обеспечивает функцию «сеть как сервис» между сетевыми интерфейсами ВМ (vNIC) под управлением других сервисов OpenStack, фактически предоставляя API, позволяющее управлять всей сетевой частью облака. В зависимости от поставленных задач и спроектированной целевой конфигурации облака, к Quantum можно подключать плагины, такие как Open vSwith, Cisco UCS/Nexus, Linux Brige, NEC OpenFlow, Nicira Network Virtualization Platform (NVP) и некоторые другие.</p>
+<p>Наиболее продвинутый вариант реализации сетевой инфраструктуры, в котором каждый(!) тенант получает приватный роутер, с возможностью создания дополнительных роутеров для каждого тенанта через Quantum API. Тенант может создавать свои сети, с возможностью подключения к роутеру. Теперь самое главное: данная схема позволяет каждому тенанту использовать любые сети, т.к. доступ вовне обеспечивается или через SNAT или Floating IPs. Иными словами, в облаке может быть несколько ВМ с одинаковыми(!) внутренними IP-адресами. Это может пригодиться, например, при переходе с одного облака на другое – запаковал машины, слил образ, настроил требуемую инфраструктуру на другом облаке, назначил IP-адреса, которые у тебя были ранее, развернул образы и все полетело без дополнительных изменений. Тот, кто часто вынужден был переносить сервера из одной подсети в другую, наверняка оценят эту возможность. С другой стороны, как часто вам может потребоваться таскать свою инфраструктуру между разными облаками?</p>
+<p>Подготовка сетевых интерфейсов:</p>
+<div class="highlight-python"><pre># Public interface
+auto eth0
+iface eth0 inet static
+address 195.208.117.140
+netmask 255.255.255.224
+
+# Private interface
+auto br-int
+iface br-int inet static
+        bridge_ports eth1
+        address 10.10.10.0
+        netmask 255.0.0.0</pre>
+</div>
+<p>В настоящем руководстве для установки компонентов облачной инфраструктуры OpenStack, мы будем использовать продукт <a class="reference external" href="http://www.opst.com/chef">OpstChef</a>. Это Open-Source инструмент управления инфраструктурой серверов. Мы будем рассматривать упрощенный вариант использования этого инструмента, без настройки Chef-сервера, а ограничимся использованием knife-solo.</p>
+<p>Первым делом на управляющей машине необходимо установить менеджер пакетов для языка программирования Руби - RubyGems. В операционной системе Ubuntu сделать это можно c помощью стандартного пакетного менеджера командой:</p>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">rubygems</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">gem-install</span> <span class="pre">knife-solo</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">knife</span> <span class="pre">configure</span> <span class="pre">-r</span> <span class="pre">.defaults</span></tt></p>
+<div class="figure align-center">
+<img alt="_images/first.png" src="_images/first.png" />
+</div>
+<div class="figure align-center">
+<img alt="_images/second.png" src="_images/second.png" />
+</div>
+<p>Используемые скрипты для chef расчитаны на использование на будующих узлах облачной инфраструктуры опреационной системы Ubuntu версии 12.04, и налагает следующие требования:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">set</span><span class="p">[:</span><span class="n">mysql</span><span class="p">][:</span><span class="n">password</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;mySuperSecret&quot;</span>
+
+<span class="nb">set</span><span class="p">[:</span><span class="n">controller</span><span class="p">][:</span><span class="n">private_ip</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;10.10.10.1&quot;</span>
+<span class="nb">set</span><span class="p">[:</span><span class="n">controller</span><span class="p">][:</span><span class="n">public_ip</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;192.168.0.101&quot;</span>
+
+<span class="nb">set</span><span class="p">[:</span><span class="n">keystone</span><span class="p">][:</span><span class="n">token</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;mySuperSecret&quot;</span>
+<span class="nb">set</span><span class="p">[:</span><span class="n">keystone</span><span class="p">][:</span><span class="n">password</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;mySuperSecret&quot;</span>
+<span class="nb">set</span><span class="p">[:</span><span class="n">keystone</span><span class="p">][:</span><span class="n">email</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;admin@post.domain.ru&quot;</span>
+
+<span class="nb">set</span><span class="p">[:</span><span class="n">dns</span><span class="p">][:</span><span class="n">zone</span><span class="p">]</span><span class="o">=</span><span class="s">&quot;cloud.domain.ru&quot;</span>
+</pre></div>
+</div>
+<p>Работа с облачной системой OpenStack, помимо Web-интерфейса, может осуществляться с помощью <a class="reference external" href="http://pypi.python.org/pypi/python-novaclient">nova-client</a> или инструмента <a class="reference external" href="http://open.eucalyptus.com/wiki/Euca2oolsGuide">euca2ools</a>. В данном руководстве мы постараемся приводить команды для обоих этих инструментов.</p>
+<p>Для использования команд nova, на клиентской машине необходимо установить пакет python-novaclient:</p>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-novaclient</span></tt></p>
+<p>и аутентифицироваться с помощью openrc файла для нужного проекта, который можно загрузить через Web-интерфейс, на вкладке settings</p>
+<div class="admonition note">
+<p class="first admonition-title">Примечание</p>
+<p class="last">Добавьте в файл openrc строчку <strong>export OS_NO_CACHE=1</strong> это избавит Вас от необходимости каждый раз вводить пароль связки ключей, при использовании последней версии клиента</p>
+</div>
+<p>После загрузки файла выполните команду:</p>
+<p><tt class="docutils literal"><span class="pre">source</span> <span class="pre">openrc.sh</span></tt></p>
+<p>Для использования команд euca, на клиентской машине необходимо установить пакет euca2ools:</p>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">euca2ools</span></tt></p>
+<p>и аутентифицироваться с помощью сертификатов EC2. Скачайте zip-архив на странице настроек проекта, распакуйте файлы и выполните</p>
+<p><tt class="docutils literal"><span class="pre">source</span> <span class="pre">ec2rc.sh</span></tt></p>
+<p>Для запуска виртуальных в облачной инфраструктуре OpenStack используются образы дисков операционных систем. В последней версии Glance добавлена также возможность создания виртуальной машины и установки операционной системы из iso-образа. Мы рассмотрим два основных формата образов дисков:</p>
+<blockquote>
+<div><ul class="simple">
+<li>AMI (англ. Amazon Machine Image). Образ операционной системы в этом формате состоит из трех частей: AKI (англ. Amazon Kernel Image) , ARI (англ. Amazon Ramdisk Image) AMI</li>
+<li>QCOW2 - это формат дискового образа программы QEMU. Название является аббревиатурой названия формата Copy-On-Write (копирование при записи).</li>
+</ul>
+</div></blockquote>
+<p>Первым шагом будет создание пустого файла образа диска. Современная операционная система семейства Windows требует для работы большое количество дискового пространства, не менее чем 20 GB.</p>
+<p><tt class="docutils literal"><span class="pre">kvm-img</span> <span class="pre">create</span> <span class="pre">-f</span> <span class="pre">raw</span> <span class="pre">windowsserver.img</span> <span class="pre">20G</span></tt></p>
+<p>Openstack использует интерфейс Virtio для дисков и сетевых адаптеров при запуске виртуальных машин. Это означает, что операционная система виртуальной машины должна иметь драйверы для Virtio. По умолчанию операционные машины семейства Windows не содержат таких драйверов, их необходимо предоставить операционной системе в процессе установки. Образ дискеты с последней версией необходимых драйверов доступен для скачивания c сайта <a class="reference external" href="http://alt.fedoraproject.org/pub/alt/virtio-win/latest/images/bin/">проекта fedora</a>
+Процесс установки Windows можно запустить с помощью команды.</p>
+<p><tt class="docutils literal"><span class="pre">kvm</span> <span class="pre">-m</span> <span class="pre">1024</span> <span class="pre">-cdrom</span> <span class="pre">windows.iso</span> <span class="pre">-drive</span> <span class="pre">file=windowsserver.img,</span> <span class="pre">if=virtio,boot=on</span> <span class="pre">-fda</span> <span class="pre">virtio-win-1.1.16.vfd</span> <span class="pre">-boot</span> <span class="pre">d</span> <span class="pre">-nographic</span> <span class="pre">-vnc</span> <span class="pre">:0</span></tt></p>
+<p>Здесь параметром cdrom указывается путь к образу установочного диска операционной системы, например windows.iso. Параметр drive - предварительно созданный образ жесткого диска. Параметром fda задается путь к загруженному образу дискеты с драйверами windows.
+После запуска команды начнется стандартный процесс установки Windows. К Консоли управления можно подключиться с помощью любого обозревателя VNC, например vncviewer:</p>
+<p><tt class="docutils literal"><span class="pre">sudo</span> <span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">vncviewer</span> <span class="pre">-y</span></tt></p>
+<p>на порт 5900.</p>
+<p><tt class="docutils literal"><span class="pre">vncviewer</span> <span class="pre">localhost:5900</span></tt></p>
+<p>Если создание образа производится на удаленной машине, подключиться к VNC-консоли можно с использованием ssh-туннеля, например так:</p>
+<p><tt class="docutils literal"><span class="pre">vncviewer</span> <span class="pre">-via</span> <span class="pre">&quot;laboshinl&#64;192.168.0.100</span> <span class="pre">-p</span> <span class="pre">22&quot;</span> <span class="pre">localhost:0</span></tt></p>
+<p>Необходимо следовать инструкциям, появляющимся на экране. В процессе установки в окне выбора жесткий диск, не будет выведено каких-либо устройств. Необходимо нажать на кнопку &#8220;Загрузить драйверы&#8221;, в левом нижнем углу и указать путь к подключенным драйверам после чего продолжить установку</p>
+<div class="admonition note">
+<p class="first admonition-title">Примечание</p>
+<p class="last">Для удобства дальнейшего использования образа рекомендуется после завершения установки разрешить удаленное администрирование системы через RDP(RemoteDesktopProtocol)</p>
+</div>
+<p><a class="reference external" href="https://launchpad.net/cirros/trunk/0.3.0/">Тестовые образы от Cirros</a></p>
+<p><a class="reference external" href="http://uec-images.ubuntu.com/">Официальные образы релизов Ubuntu</a></p>
+<p>Готовые образы некоторых операционных систем доступны так же на сайте <a class="reference external" href="http://xenlet.stu.neva.ru">нашего проекта</a></p>
+<p><tt class="docutils literal"><span class="pre">nova</span> <span class="pre">cloudpipe-create</span> <span class="pre">$project_ID</span></tt></p>
+<p>Шаблон конфирурационного файла для openvpn</p>
+<div class="highlight-python"><pre># Edit the following lines to point to your cert files:
+cert cert.pem
+key pk.pem
+
+ca cacert.pem
+
+client
+dev tap
+proto udp
+
+remote $controller_public_ip $port
+resolv-retry infinite
+nobind
+
+# Downgrade privileges after initialization (non-Windows only)
+user nobody
+group nogroup
+comp-lzo
+
+# Set log file verbosity.
+verb 2
+
+keepalive 10 120
+ping-timer-rem
+persist-tun
+persist-key</pre>
+</div>
+</div>
+<div class="section" id="ceph">
+<h2>CEPH<a class="headerlink" href="#ceph" title="Ссылка на этот заголовок">¶</a></h2>
+<p><a class="reference external" href="http://ceph.com">Ceph</a> — свободная распределённая файловая система. Ceph может использоваться на системах, состоящих как из нескольких машин, так и из тысяч узлов. Общий объем хранилища данных может измеряться петабайтами, встроенные механизмы продублированной репликации данных (не зависит от отказа отдельных узлов) обеспечивают чрезвычайно высокую живучесть системы, при добавлении или удалении новых узлов, массив данных автоматически перебалансируется с учетом новшеств.</p>
+<p>Установка</p>
+<p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--keyserver</span> <span class="pre">keyserver.ubuntu.com</span> <span class="pre">--recv</span> <span class="pre">17ED316D</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">--armor</span> <span class="pre">17ED316D</span> <span class="pre">|</span> <span class="pre">apt-key</span> <span class="pre">add</span> <span class="pre">-</span></tt></p>
+</div>
+</div>
+<div class="section" id="grizzly">
+<h1>Grizzly<a class="headerlink" href="#grizzly" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Необходимо добавить репозиторий &#8220;Grizzly&#8221;</p>
+<p><tt class="docutils literal"><span class="pre">echo</span> <span class="pre">&quot;deb</span> <span class="pre">http://ppa.launchpad.net/openstack-ubuntu-testing/grizzly-trunk-testing/ubuntu/</span> <span class="pre">precise</span> <span class="pre">main&quot;</span> <span class="pre">&gt;&gt;</span> <span class="pre">/etc/apt/sources.list</span></tt></p>
+<p>Получение ключа</p>
+<p><tt class="docutils literal"><span class="pre">gpg</span> <span class="pre">--keyserver</span> <span class="pre">keyserver.ubuntu.com</span> <span class="pre">--recv</span> <span class="pre">3B6F61A6</span> <span class="pre">&amp;&amp;</span> <span class="pre">gpg</span> <span class="pre">--export</span> <span class="pre">--armor</span> <span class="pre">3B6F61A6</span> <span class="pre">|</span> <span class="pre">apt-key</span> <span class="pre">add</span> <span class="pre">-</span></tt></p>
+<p>Обновление списка пакетов</p>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">update</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">mysql-server</span> <span class="pre">python-mysqldb</span> <span class="pre">-y</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">sed</span> <span class="pre">-i</span> <span class="pre">'s/127.0.0.1/10.10.10.0/g'</span> <span class="pre">/etc/mysql/my.cnf</span></tt></p>
+<div class="admonition hint">
+<p class="first admonition-title">Подсказка</p>
+<p class="last">Здесь <strong>10.10.10.0</strong> ip-адрес сетевого интерфейса во внутренней сети</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">mysql</span> <span class="pre">restart</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">rabbitmq-server</span></tt></p>
+<div class="section" id="keystone">
+<h2>Keystone<a class="headerlink" href="#keystone" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">keystone</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">keystone;&quot;</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;GRANT</span> <span class="pre">ALL</span> <span class="pre">PRIVILEGES</span> <span class="pre">ON</span> <span class="pre">*.*</span> <span class="pre">TO</span> <span class="pre">'root'&#64;'%'</span> <span class="pre">IDENTIFIED</span> <span class="pre">BY</span> <span class="pre">'MysqlPass';&quot;</span></tt></p>
+<div class="admonition hint">
+<p class="first admonition-title">Подсказка</p>
+<p class="last">Здесь и далее <strong>MysqlPass</strong> - пароль, введенный при установке пакета mysql-server</p>
+</div>
+<p>В конфигурационном файле /etc/keystone/keystone.conf необходимо:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">раскоментировать строчку и изменить токен в секции [DEFAULT]:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">admin_token</span> <span class="o">=</span> <span class="n">AdminToken</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">в секции [sql] указать путь к созданной базе данных:</p>
+<div class="highlight-python"><pre>connection = mysql://root:MysqlPass@10.10.10.0/keystone</pre>
+</div>
+</li>
+<li><p class="first">секцию [catalog] привести к следующему виду:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c"># dynamic, sql-based backend (supports API/CLI-based management commands)</span>
+<span class="c"># driver = keystone.catalog.backends.sql.Catalog</span>
+
+<span class="c"># static, file-based backend (does *NOT* support any management commands)</span>
+<span class="n">driver</span> <span class="o">=</span> <span class="n">keystone</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">backends</span><span class="o">.</span><span class="n">templated</span><span class="o">.</span><span class="n">TemplatedCatalog</span>
+<span class="n">template_file</span> <span class="o">=</span> <span class="n">default_catalog</span><span class="o">.</span><span class="n">templates</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">в секции [signing]:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">token_format</span> <span class="o">=</span> <span class="n">UUID</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div></blockquote>
+<p>Перезапуск сервиса</p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">keystone</span> <span class="pre">restart</span></tt></p>
+<p>Синхронизация с базой данных</p>
+<p><tt class="docutils literal"><span class="pre">keystone-manage</span> <span class="pre">db_sync</span></tt></p>
+<p>Аутентификация</p>
+<p><tt class="docutils literal"><span class="pre">export</span> <span class="pre">SERVICE_TOKEN=AdminToken</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">export</span> <span class="pre">SERVICE_ENDPOINT=&quot;http://10.10.10.0:35357/v2.0&quot;</span></tt></p>
+<p>Для дальнейшей работы необходимо создать два проекта. Проект, роль, и пользователь <strong>admin</strong>, необходим для функционирования сервисов и администрирования облака.</p>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">tenant-create</span> <span class="pre">--name=admin</span></tt></p>
+<div class="highlight-python"><pre>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |                                  |
+|   enabled   |               True               |
+|      id     | 1f155208db0a4c959365a0002b8b507e |
+|     name    |              admin               |
++-------------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-create</span> <span class="pre">--name=admin</span> <span class="pre">--pass=cl0udAdmin</span> <span class="pre">--email=cloud&#64;admin.com</span></tt></p>
+<div class="highlight-python"><pre>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |         cloud@admin.com          |
+| enabled  |               True               |
+|    id    | 1d2a73ea87f249769f6669ee2f812932 |
+|   name   |              admin               |
+| tenantId |                                  |
++----------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">role-create</span> <span class="pre">--name=admin</span></tt></p>
+<div class="highlight-python"><pre>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|    id    | 424f7b79893c4266bf5753894a4668d2 |
+|   name   |              admin               |
++----------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-role-add</span> <span class="pre">--user-id</span> <span class="pre">1d2a73ea87f249769f6669ee2f812932</span> <span class="pre">--role-id</span> <span class="pre">424f7b79893c4266bf5753894a4668d2</span> <span class="pre">--tenant-id</span> <span class="pre">1f155208db0a4c959365a0002b8b507e</span></tt></p>
+<p>Роль <strong>Member</strong> - роль по умолчанию для добавления пользователей облака. Пользователь <strong>tester</strong> и проект <strong>test</strong> необходимы для проверки работы сервисов облачной инфраструктуры после установки.</p>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">tenant-create</span> <span class="pre">--name=test</span></tt></p>
+<div class="highlight-python"><pre>+-------------+----------------------------------+
+|   Property  |              Value               |
++-------------+----------------------------------+
+| description |                                  |
+|   enabled   |               True               |
+|      id     | 37cfbd624d0242b995fa695d8b134bb6 |
+|     name    |               test               |
++-------------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-create</span> <span class="pre">--name=tester</span> <span class="pre">--pass=cl0udAdmin</span> <span class="pre">--email=cloud&#64;admin.com</span></tt></p>
+<div class="highlight-python"><pre>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|  email   |         cloud@admin.com          |
+| enabled  |               True               |
+|    id    | cf0828666bfd4a24b12dcd83848ef360 |
+|   name   |              tester              |
+| tenantId |                                  |
++----------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">role-create</span> <span class="pre">--name=Member</span></tt></p>
+<div class="highlight-python"><pre>+----------+----------------------------------+
+| Property |              Value               |
++----------+----------------------------------+
+|    id    | 01242eec84c14106a10759e210c98dee |
+|   name   |              Member              |
++----------+----------------------------------+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-role-add</span> <span class="pre">--user-id</span> <span class="pre">cf0828666bfd4a24b12dcd83848ef360</span> <span class="pre">--role-id</span> <span class="pre">01242eec84c14106a10759e210c98dee</span> <span class="pre">--tenant-id</span> <span class="pre">37cfbd624d0242b995fa695d8b134bb6</span></tt></p>
+<p>Файл /etc/keystone/default_catalog.templates необходимо привести к следующему виду</p>
+<div class="highlight-python"><pre># config for TemplatedCatalog, using camelCase because I don't want to do
+# translations for keystone compat
+catalog.RegionOne.identity.publicURL = http://195.208.117.140:$(public_port)s/v2.0
+catalog.RegionOne.identity.adminURL = http://195.208.117.140:$(admin_port)s/v2.0
+catalog.RegionOne.identity.internalURL = http://195.208.117.140:$(public_port)s/v2.0
+catalog.RegionOne.identity.name = Identity Service
+
+# fake compute service for now to help novaclient tests work
+catalog.RegionOne.compute.publicURL = http://195.208.117.140:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.adminURL = http://195.208.117.140:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.internalURL = http://195.208.117.140:$(compute_port)s/v1.1/$(tenant_id)s
+catalog.RegionOne.compute.name = Compute Service
+
+catalog.RegionOne.volume.publicURL = http://195.208.117.140:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.adminURL = http://195.208.117.140:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.internalURL = http://195.208.117.140:8776/v1/$(tenant_id)s
+catalog.RegionOne.volume.name = Volume Service
+
+catalog.RegionOne.ec2.publicURL = http://195.208.117.140:8773/services/Cloud
+catalog.RegionOne.ec2.adminURL = http://195.208.117.140:8773/services/Admin
+catalog.RegionOne.ec2.internalURL = http://195.208.117.140:8773/services/Cloud
+catalog.RegionOne.ec2.name = EC2 Service
+
+catalog.RegionOne.image.publicURL = http://195.208.117.140:9292/v1
+catalog.RegionOne.image.adminURL = http://195.208.117.140:9292/v1
+catalog.RegionOne.image.internalURL = http://195.208.117.140:9292/v1
+catalog.RegionOne.image.name = Image Service
+
+catalog.RegionOne.network.publicURL = http://195.208.117.140:9696
+catalog.RegionOne.network.adminURL = http://195.208.117.140:9696
+catalog.RegionOne.network.internalURL = http://195.208.117.140:9696
+catalog.RegionOne.network.name = Network Service
+
+catalog.RegionOne.object_store.publicURL = http://195.208.117.140:8080/v1/AUTH_$(tenant_id)s
+catalog.RegionOne.object_store.adminURL = http://195.208.117.140:8080/
+catalog.RegionOne.object_store.internalURL = http://195.208.117.140:8080/v1/AUTH_$(tenant_id)s
+catalog.RegionOne.object_store.name = S3 Service</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Примечание</p>
+<p class="last">Здесь и далее <strong>195.208.117.140</strong> ip-адрес сетевого интерфейса контроллера облака во внешней сети</p>
+</div>
+<p>Проверка работы сервиса keystone</p>
+<p><tt class="docutils literal"><span class="pre">keystone</span> <span class="pre">user-list</span></tt></p>
+<div class="highlight-python"><pre>+----------------------------------+--------+---------+-----------------+
+|                id                |  name  | enabled |      email      |
++----------------------------------+--------+---------+-----------------+
+| 1d2a73ea87f249769f6669ee2f812932 | admin  |   True  | cloud@admin.com |
+| cf0828666bfd4a24b12dcd83848ef360 | tester |   True  | cloud@admin.com |
++----------------------------------+--------+---------+-----------------+</pre>
+</div>
+</div>
+<div class="section" id="glance">
+<h2>Glance<a class="headerlink" href="#glance" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">glance</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">glance;&quot;</span></tt></p>
+<p>В конфигурационных файлах /etc/glance glance-api.conf и /etc/glance/glance-registry.conf необходимо изменить:</p>
+<div class="highlight-python"><pre>[DEFAULT]
+sql_connection = mysql://root@MysqlPass@10.10.10.0/glance
+
+[keystone_authtoken]
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = admin
+admin_user = admin
+admin_password = cl0udAdmin
+
+[paste_deploy]
+flavor = keystone</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">glance-api</span> <span class="pre">restart</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">glance-registry</span> <span class="pre">restart</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">glance-manage</span> <span class="pre">db_sync</span></tt></p>
+<div class="admonition warning">
+<p class="first admonition-title">Предупреждение</p>
+<p class="last">Glance требует версию пакета warlock&gt;=0.7.0,&lt;2 а в репозитории Ubuntu &#8216;Precise&#8217; версия 0.1.0, необходимо установить свежую версию с помощью pip install</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">python-pip</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">warlock</span> <span class="pre">--upgrade</span></tt></p>
+<p>Загрузка тестового образа</p>
+<p><tt class="docutils literal"><span class="pre">glance</span> <span class="pre">image-create</span> <span class="pre">--name</span> <span class="pre">cirros-0.3.0</span> <span class="pre">--is-public</span> <span class="pre">true</span> <span class="pre">--container-format</span> <span class="pre">bare</span> <span class="pre">--disk-format</span> <span class="pre">qcow2</span> <span class="pre">--copy-from</span> <span class="pre">https://launchpad.net/cirros/trunk/0.3.0/+download/cirros-0.3.0-x86_64-disk.img</span></tt></p>
+<div class="admonition note">
+<p class="first admonition-title">Примечание</p>
+<p class="last">Для тестового образа cirros-0.3.0 помимо ssh-ключа для авторизации можно использовать  логин <strong>cirros</strong> и пароль <strong>cubswin:)</strong></p>
+</div>
+</div>
+<div class="section" id="nova">
+<h2>Nova<a class="headerlink" href="#nova" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">nova-api</span> <span class="pre">nova-cert</span> <span class="pre">novnc</span> <span class="pre">nova-consoleauth</span> <span class="pre">nova-scheduler</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">nova;&quot;</span></tt></p>
+<p>В файле /etc/nova/api-paste.ini:</p>
+<div class="highlight-python"><pre>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = admin
+admin_user = admin
+admin_password = cl0udAdmin
+signing_dir = /tmp/keystone-signing-nova</pre>
+</div>
+<p>В файле /etc/nova/nova.conf:</p>
+<div class="highlight-python"><pre>[DEFAULT]
+logdir=/var/log/nova
+state_path=/var/lib/nova
+lock_path=/run/lock/nova
+verbose=True
+api_paste_config=/etc/nova/api-paste.ini
+compute_scheduler_driver = nova.scheduler.filter_scheduler.FilterScheduler
+s3_host=10.10.10.0
+ec2_host=10.10.10.0
+ec2_dmz_host=10.10.10.0
+rabbit_host=10.10.10.0
+cc_host=10.10.10.0
+dmz_cidr=169.254.169.254/32
+metadata_host=10.10.10.0
+metadata_listen=0.0.0.0
+nova_url=http://10.10.10.0:8774/v1.1/
+sql_connection=mysql://root:MysqlPass@10.10.10.0/nova
+ec2_url=http://10.10.10.0:8773/services/Cloud
+root_helper=sudo nova-rootwrap /etc/nova/rootwrap.conf
+
+# Auth
+use_deprecated_auth=false
+auth_strategy=keystone
+keystone_ec2_url=http://10.10.10.0:5000/v2.0/ec2tokens
+# Imaging service
+glance_api_servers=10.10.10.0:9292
+image_service=nova.image.glance.GlanceImageService
+
+# Vnc configuration
+novnc_enabled=true
+novncproxy_base_url=http://195.208.117.140:6080/vnc_auto.html
+novncproxy_port=6080
+vncserver_proxyclient_address=195.208.117.140
+vncserver_listen=0.0.0.0
+
+# Network settings
+network_api_class=nova.network.quantumv2.api.API
+quantum_url=http://10.10.10.0:9696
+quantum_auth_strategy=keystone
+quantum_admin_tenant_name=service
+quantum_admin_username=quantum
+quantum_admin_password=service_pass
+quantum_admin_auth_url=http://10.10.10.0:35357/v2.0
+libvirt_vif_driver=nova.virt.libvirt.vif.LibvirtHybridOVSBridgeDriver
+linuxnet_interface_driver=nova.network.linux_net.LinuxOVSInterfaceDriver
+firewall_driver=nova.virt.libvirt.firewall.IptablesFirewallDriver
+
+# Compute #
+compute_driver=libvirt.LibvirtDriver
+
+# Cinder #
+volume_api_class=nova.volume.cinder.API
+osapi_volume_listen_port=5900</pre>
+</div>
+<p>Синхронизация с базой</p>
+<p><tt class="docutils literal"><span class="pre">nova-manage</span> <span class="pre">db_sync</span></tt></p>
+<p>Перезапуск сервисов</p>
+<p><tt class="docutils literal"><span class="pre">find</span> <span class="pre">/etc/init.d</span> <span class="pre">-name</span> <span class="pre">nova*</span> <span class="pre">-exec</span> <span class="pre">{}</span> <span class="pre">restart</span> <span class="pre">\;</span></tt></p>
+<div class="admonition hint">
+<p class="first admonition-title">Подсказка</p>
+<p class="last">Посмотреть список работающих сервисов Nova можно командой nova-manage service list</p>
+</div>
+</div>
+<div class="section" id="cinder">
+<h2>Cinder<a class="headerlink" href="#cinder" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">cinder-api</span> <span class="pre">cinder-scheduler</span> <span class="pre">cinder-volume</span> <span class="pre">iscsitarget</span> <span class="pre">open-iscsi</span> <span class="pre">iscsitarget-dkms</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">sed</span> <span class="pre">-i</span> <span class="pre">'s/false/true/g'</span> <span class="pre">/etc/default/iscsitarget</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">iscsitarget</span> <span class="pre">start</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">open-iscsi</span> <span class="pre">start</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">mysql</span> <span class="pre">-uroot</span> <span class="pre">-pMysqlPass</span> <span class="pre">-e</span> <span class="pre">&quot;CREATE</span> <span class="pre">DATABASE</span> <span class="pre">cinder;&quot;</span></tt></p>
+<p>В файле /etc/cinder/api-pate.ini:</p>
+<div class="highlight-python"><pre>[filter:authtoken]
+paste.filter_factory = keystoneclient.middleware.auth_token:filter_factory
+service_protocol = http
+service_host = 127.0.0.1
+service_port = 5000
+auth_host = 127.0.0.1
+auth_port = 35357
+auth_protocol = http
+admin_tenant_name = admin
+admin_user = admin
+admin_password = cl0udAdmin
+signing_dir = /var/lib/cinder</pre>
+</div>
+<p>В файле /etc/cinder/cinder.conf:</p>
+<div class="highlight-python"><pre>[DEFAULT]
+rootwrap_config = /etc/cinder/rootwrap.conf
+sql_connection = mysql://root:MysqlPass@10.10.10.0/cinder
+api_paste_confg = /etc/cinder/api-paste.ini
+iscsi_helper = tgtadm
+volume_name_template = volume-%s
+volume_group = tn0
+verbose = True
+auth_strategy = keystone
+state_path = /var/lib/cinder
+volumes_dir = /var/lib/cinder/volumes</pre>
+</div>
+<div class="admonition hint">
+<p class="first admonition-title">Подсказка</p>
+<p class="last">Здесь tn0 - название группы логических томов lvm2</p>
+</div>
+<p><tt class="docutils literal"><span class="pre">cinder-manage</span> <span class="pre">db</span> <span class="pre">sync</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">cinder-volume</span> <span class="pre">restart</span></tt></p>
+<p><tt class="docutils literal"><span class="pre">service</span> <span class="pre">cinder-api</span> <span class="pre">restart</span></tt></p>
+</div>
+<div class="section" id="dashboard">
+<h2>Dashboard<a class="headerlink" href="#dashboard" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">openstack-dashboard</span> <span class="pre">memcached</span> <span class="pre">node-less</span></tt></p>
+</div>
+<div class="section" id="nova-compute">
+<h2>nova-compute<a class="headerlink" href="#nova-compute" title="Ссылка на этот заголовок">¶</a></h2>
+<p><tt class="docutils literal"><span class="pre">apt-get</span> <span class="pre">install</span> <span class="pre">-y</span> <span class="pre">kvm</span> <span class="pre">libvirt-bin</span> <span class="pre">pm-utils</span> <span class="pre">nova-conductor</span></tt></p>
+</div>
+<div class="section" id="id4">
+<h2>Quantum<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<blockquote>
+<div>pip install cliff &#8211;upgrade</div></blockquote>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+        <br/>
+        
+  <a href="_sources/README.txt"
+     rel="nofollow">Source</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2013, Леонид Лабошин.<br/>
+      При создании использован <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
