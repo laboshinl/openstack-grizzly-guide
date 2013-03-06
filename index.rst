@@ -407,6 +407,11 @@ Keystone
 	catalog.RegionOne.network.internalURL = http://195.208.117.140:9696
 	catalog.RegionOne.network.name = Network Service
 
+	catalog.RegionOne.object_store.publicURL = http://195.208.117.140:8080/v1/AUTH_$(tenant_id)s
+	catalog.RegionOne.object_store.adminURL = http://195.208.117.140:8080/
+	catalog.RegionOne.object_store.internalURL = http://195.208.117.140:8080/v1/AUTH_$(tenant_id)s
+	catalog.RegionOne.object_store.name = S3 Service
+
 .. note::
 	
 	Здесь и далее **195.208.117.140** ip-адрес сетевого интерфейса контроллера облака во внешней сети
@@ -613,4 +618,11 @@ Dashboard
 
 nova-compute
 ------------
+
+``apt-get install -y kvm libvirt-bin pm-utils nova-conductor``
+
+Quantum
+-------
+
+ pip install cliff --upgrade
 
