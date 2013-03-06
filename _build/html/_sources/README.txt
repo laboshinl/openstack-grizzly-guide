@@ -10,19 +10,12 @@
 .. toctree::
    :maxdepth: 2
 
-
+.. figure:: openstack.png
+   :scale: 80
+   :align: right
 
 Компоненты Openstack
 --------------------
-
-.. image:: kvm.png
-   :scale: 10
-   
-.. image:: openstack.png
-   :scale: 80
-     
-.. image:: ceph.png
-   :scale: 25
 
 `OpenStack <http://www.openstack.org/>`_ — это комплекс проектов свободного (`Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.
 
