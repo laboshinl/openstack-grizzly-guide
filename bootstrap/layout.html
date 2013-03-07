@@ -1,6 +1,6 @@
 {% extends "basic/layout.html" %}
 {% set script_files = script_files + ['_static/js/jquery-1.9.1.min.js', '_static/js/jquery-fix.js', '_static/bootstrap-2.3.0/js/bootstrap.min.js', '_static/bootstrap-sphinx.js'] %}
-{% set css_files = ['_static/bootstrap-2.3.0/css/bootstrap.min.css', '_static/bootstrap-sphinx.css', '_static/bootstrap-2.3.0/css/bootstrap-responsive.min.css'] + css_files %}
+{% set css_files = ['_static/bootstrap-2.3.0/css/bootstrap.css', '_static/bootstrap-sphinx.css', '_static/bootstrap-2.3.0/css/bootstrap-responsive.css'] + css_files %}
 
 {%- block doctype -%}
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 {# Sidebar: Rework into our Boostrap nav section. #}
 {% macro navBar() %}
   <div id="navbar" class="{{ theme_navbar_class }} {% if theme_navbar_fixed_top == 'true' -%} navbar-fixed-top{%- endif -%}">
-    <div class="navbar-inner">
+    <div class="navbar-inner"><div class="container">
       <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
       <button class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
         <span class="icon-bar"></span>
@@ -30,9 +30,6 @@
           {% block sidebarrel %}
             {% include "relations.html" %}
           {% endblock %}
-         <!-- {% if theme_source_link_position == "nav" %}
-            <li>{% include "sourcelink.html" %}</li>
-          {% endif %} -->
         </ul>
 
         {% block sidebarsearch %}
@@ -41,6 +38,7 @@
       </div>
     </div>
   </div>
+</div>
 {% endmacro %}
 
 {%- block extrahead %}
@@ -70,10 +68,6 @@
   <div class="container">
     <p class="pull-right">
       <a href="#">Наверх</a>
-      <!--{% if theme_source_link_position == "footer" %}
-        <br/>
-        {% include "sourcelink.html" %}
-      {% endif %} -->
     </p>
     <p>
     {%- if show_copyright %}

@@ -5,11 +5,6 @@
 .. toctree::
    :maxdepth: 2
 
-.. figure:: openstack.png
-   :scale: 80
-   :align: right
-
-
 `OpenStack <http://www.openstack.org/>`_ — это комплекс проектов свободного (`Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.
 
 На данный момент OpenStack содержит семь ключевых компонентов:
@@ -40,10 +35,6 @@
 
 Подготовка узлов
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-.. figure:: ubuntu.png
-   :align: right
-   :scale: 20
    	
 Установка сервисов OpenStack будет производиться из пакетов, на основе операционной системы Ubuntu 12.04 «Precise», c использованием системы автоматизации процесса установки и настройки программного обеспечения Chef.
 
@@ -54,13 +45,6 @@
 Публичным и приватным адресам вируальных машин с использованием `MyDns <http://mydns.bboy.net/>`_ автоматически выдаются доменные имена. 
 
 Хранилища образов, дисков виртуальных машин и объектов располагаются на LVM томах.
-
-
-
-.. figure:: quantum.png
-   :align: center
-
-За работу с сетевой частью OpenStack отвечает библиотека Quantum, которая обеспечивает функцию «сеть как сервис» между сетевыми интерфейсами ВМ (vNIC) под управлением других сервисов OpenStack, фактически предоставляя API, позволяющее управлять всей сетевой частью облака. В зависимости от поставленных задач и спроектированной целевой конфигурации облака, к Quantum можно подключать плагины, такие как Open vSwith, Cisco UCS/Nexus, Linux Brige, NEC OpenFlow, Nicira Network Virtualization Platform (NVP) и некоторые другие. 
 
 Наиболее продвинутый вариант реализации сетевой инфраструктуры, в котором каждый(!) тенант получает приватный роутер, с возможностью создания дополнительных роутеров для каждого тенанта через Quantum API. Тенант может создавать свои сети, с возможностью подключения к роутеру. Теперь самое главное: данная схема позволяет каждому тенанту использовать любые сети, т.к. доступ вовне обеспечивается или через SNAT или Floating IPs. Иными словами, в облаке может быть несколько ВМ с одинаковыми(!) внутренними IP-адресами. Это может пригодиться, например, при переходе с одного облака на другое – запаковал машины, слил образ, настроил требуемую инфраструктуру на другом облаке, назначил IP-адреса, которые у тебя были ранее, развернул образы и все полетело без дополнительных изменений. Тот, кто часто вынужден был переносить сервера из одной подсети в другую, наверняка оценят эту возможность. С другой стороны, как часто вам может потребоваться таскать свою инфраструктуру между разными облаками?
 
@@ -205,9 +189,6 @@ Openstack использует интерфейс Virtio для дисков и 
 CEPH
 ------------------------------------------------------------------------
 
-.. figure:: ceph.png
-   :scale: 30
-   :align: right
 
 `Ceph <http://ceph.com>`_ — свободная распределённая файловая система. Ceph может использоваться на системах, состоящих как из нескольких машин, так и из тысяч узлов. Общий объем хранилища данных может измеряться петабайтами, встроенные механизмы продублированной репликации данных (не зависит от отказа отдельных узлов) обеспечивают чрезвычайно высокую живучесть системы, при добавлении или удалении новых узлов, массив данных автоматически перебалансируется с учетом новшеств.
 
@@ -245,6 +226,13 @@ CEPH
 
 Keystone
 ------------------------------------------------------------------------
+
+Keystone provides a single point of integration for OpenStack policy, catalog, token and authentication.
+
+	* keystone handles API requests as well as providing configurable catalog, policy, token and identity services.
+	* Each Keystone function has a pluggable backend which allows different ways to use the particular service. Most support standard backends like LDAP or SQL, as well as Key Value Stores (KVS).
+
+Most people will use this as a point of customization for their current authentication services.
 
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -430,6 +418,17 @@ Keystone
 Glance
 ------------------------------------------------------------------------
 
+The Glance architecture has stayed relatively stable since the Cactus release. The biggest architectural change has been the addition of authentication, which was added in the Diablo release. Just as a quick reminder, Glance has four main parts to it:
+
+	* glance-api accepts Image API calls for image discovery, image retrieval and image storage.
+	* glance-registry stores, processes and retrieves metadata about images (size, type, etc.).
+	* A database to store the image metadata. Like Nova, you can choose your database depending on your preference (but most people use MySQL or SQlite).
+	* A storage repository for the actual image files. In the diagram above, Swift is shown as the image repository, but this is configurable. In addition to Swift, Glance supports normal filesystems, RADOS block devices, Amazon S3 and HTTP. Be aware that some of these choices are limited to read-only usage.
+
+There are also a number of periodic process which run on Glance to support caching. The most important of these is the replication services, which ensures consistency and availability through the cluster. Other periodic processes include auditors, updaters and reapers.
+
+As you can see from the diagram in the Conceptual Architecture section, Glance serves a central role to the overall IaaS picture. It accepts API requests for images (or image metadata) from end users or Nova components and can store its disk files in the object storage service, Swift.
+
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -482,6 +481,19 @@ Glance
 
 Nova
 ------------------------------------------------------------------------
+
+Nova is the most complicated and distributed component of OpenStack. A large number of processes cooperate to turn end user API requests into running virtual machines. Below is a list of these processes and their functions:
+
+	* nova-api accepts and responds to end user compute API calls. It supports OpenStack Compute API, Amazon's EC2 API and a special Admin API (for privileged users to perform administrative actions). It also initiates most of the orchestration activities (such as running an instance) as well as enforces some policy (mostly quota checks).
+	* The nova-compute process is primarily a worker daemon that creates and terminates virtual machine instances via hypervisor's APIs (XenAPI for XenServer/XCP, libvirt for KVM or QEMU, VMwareAPI for VMware, etc.). The process by which it does so is fairly complex but the basics are simple: accept actions from the queue and then perform a series of system commands (like launching a KVM instance) to carry them out while updating state in the database.
+	* nova-volume manages the creation, attaching and detaching of persistent volumes to compute instances (similar functionality to Amazon’s Elastic Block Storage). It can use volumes from a variety of providers such as iSCSI or Rados Block Device in Ceph. A new OpenStack projects, Cinder, will eventually replace nova-volume functionality. In the Folsom release, nova-volume and the Block Storage service will have similar functionality.
+	* The nova-network worker daemon is very similar to nova-compute and nova-volume. It accepts networking tasks from the queue and then performs tasks to manipulate the network (such as setting up bridging interfaces or changing iptables rules). This functionality is being migrated to Quantum, a separate OpenStack service. In the Folsom release, much of the functionality will be duplicated between nova-network and Quantum.
+	* The nova-schedule process is conceptually the simplest piece of code in OpenStack Nova: take a virtual machine instance request from the queue and determines where it should run (specifically, which compute server host it should run on).
+	* The queue provides a central hub for passing messages between daemons. This is usually implemented with RabbitMQ today, but could be any AMPQ message queue (such as Apache Qpid). New to the Folsom release is support for Zero MQ (note: I've only included this so that Eric Windisch won't be hounding me mercilessly about it's omission).
+	* The SQL database stores most of the build-time and run-time state for a cloud infrastructure. This includes the instance types that are available for use, instances in use, networks available and projects. Theoretically, OpenStack Nova can support any database supported by SQL-Alchemy but the only databases currently being widely used are sqlite3 (only appropriate for test and development work), MySQL and PostgreSQL.
+	* Nova also provides console services to allow end users to access their virtual instance's console through a proxy. This involves several daemons (nova-console, nova-vncproxy and nova-consoleauth).
+
+Nova interacts with many other OpenStack services: Keystone for authentication, Glance for images and Horizon for web interface. The Glance interactions are central. The API process can upload and query Glance while nova-compute will download images for use in launching images.
 
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -580,6 +592,15 @@ Nova
 Cinder
 ------------------------------------------------------------------------
 
+Cinder separates out the persistent block storage functionality that was previously part of Openstack Compute (in the form of nova-volume) into it's own service. The OpenStack Block Storage API allows for manipulation of volumes, volume types (similar to compute flavors) and volume snapshots.
+
+	* cinder-api accepts API requests and routes them to cinder-volume for action.
+	* cinder-volume acts upon the requests by reading or writing to the Cinder database to maintain state, interacting with other processes (like cinder-scheduler) through a message queue and directly upon block storage providing hardware or software. It can interact with a variety of storage providers through a driver architecture. Currently, there are drivers for IBM, SolidFire, NetApp, Nexenta, Zadara, linux iSCSI and other storage providers.
+	* Much like nova-scheduler, the cinder-scheduler daemon picks the optimal block storage provider node to create the volume on.
+	* Cinder deployments will also make use of a messaging queue to route information between the cinder processes as well as a database to store volume state.
+
+Like Quantum, Cinder will mainly interact with Nova, providing volumes for its instances.
+
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -637,6 +658,17 @@ Cinder
 Dashboard
 ------------------------------------------------------------------------
 
+Horizon is a modular Django web application that provides an end user and administrator interface to OpenStack services.
+
+.. figure:: horizon.png 
+
+As with most web applications, the architecture is fairly simple:
+
+	* Horizon is usually deployed via mod_wsgi in Apache. The code itself is separated into a reusable python module with most of the logic (interactions with various OpenStack APIs) and presentation (to make it easily customizable for different sites).
+	* A database (configurable as to which one). As it relies mostly on the other services for data, it stores very little data of its own.
+
+From a network architecture point of view, this service will need to be customer accessible as well as be able to talk to each service's public APIs. If you wish to use the administrator functionality (i.e. for other services), it will also need connectivity to their Admin API endpoints (which should not be customer accessible).
+
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -647,6 +679,18 @@ Dashboard
 Quantum
 ------------------------------------------------------------------------
 
+.. figure:: quantum.png
+   :align: center
+
+За работу с сетевой частью OpenStack отвечает библиотека Quantum, которая обеспечивает функцию «сеть как сервис» между сетевыми интерфейсами ВМ (vNIC) под управлением других сервисов OpenStack, фактически предоставляя API, позволяющее управлять всей сетевой частью облака. В зависимости от поставленных задач и спроектированной целевой конфигурации облака, к Quantum можно подключать плагины, такие как Open vSwith, Cisco UCS/Nexus, Linux Brige, NEC OpenFlow, Nicira Network Virtualization Platform (NVP) и некоторые другие. 
+Quantum provides "network connectivity as a service" between interface devices managed by other OpenStack services (most likely Nova). The service works by allowing users to create their own networks and then attach interfaces to them. Like many of the OpenStack services, Quantum is highly configurable due to it's plug-in architecture. These plug-ins accommodate different networking equipment and software. As such, the architecture and deployment can vary dramatically. In the above architecture, a simple Linux networking plug-in is shown.
+
+	* quantum-server accepts API requests and then routes them to the appropriate quantum plugin for action.
+	* Quantum plugins and agents perform the actual actions such as plugging and unplugging ports, creating networks or subnets and IP addressing. These plugins and agents differ depending on the vendor and technologies used in the particular cloud. Quantum ships with plugins and agents for: Cisco virtual and physical switches, Nicira NVP product, NEC OpenFlow products, Open vSwitch, Linux bridging and the Ryu Network Operating System. Midokua also provides a plug-in for Quantum integration. The common agents are L3 (layer 3), DHCP (dynamic host IP addressing) and the specific plug-in agent.
+	* Most Quantum installations will also make use of a messaging queue to route information between the quantum-server and various agents as well as a database to store networking state for particular plugins.
+
+Quantum will interact mainly with Nova, where it will provide networks and connectivity for its instances.
+
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -656,6 +700,19 @@ Quantum
 
 Swift
 ------------------------------------------------------------------------
+
+The swift architecture is very distributed to prevent any single point of failure as well as to scale horizontally. It includes the following components:
+
+	* Proxy server (swift-proxy-server) accepts incoming requests via the OpenStack Object API or just raw HTTP. It accepts files to upload, modifications to metadata or container creation. In addition, it will also serve files or container listing to web browsers. The proxy server may utilize an optional cache (usually deployed with memcache) to improve performance.
+	* Account servers manage accounts defined with the object storage service.
+	* Container servers manage a mapping of containers (i.e folders) within the object store service.
+	* Object servers manage actual objects (i.e. files) on the storage nodes.
+	* There are also a number of periodic process which run to perform housekeeping tasks on the large data store. The most important of these is the replication services, which ensures consistency and availability through the cluster. Other periodic processes include auditors, updaters and reapers.
+
+The object store can also serve static web pages and objects via HTTP. In fact, the diagrams in this blog post are being served out of Rackspace Cloud's Swift service.
+
+Authentication is handled through configurable WSGI middleware (which will usually be Keystone).
+
 
 Установка
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

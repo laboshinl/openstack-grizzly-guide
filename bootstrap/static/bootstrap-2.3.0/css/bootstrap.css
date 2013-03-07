@@ -974,6 +974,7 @@ pre {
   padding: 0 3px 2px;
   font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
   font-size: 12px;
+  font-weight: bold;
   color: #333333;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
@@ -982,7 +983,7 @@ pre {
 
 code {
   padding: 2px 4px;
-  color: #d14;
+  color: #333333;
   white-space: nowrap;
   background-color: #f7f7f9;
   border: 1px solid #e1e1e8;
