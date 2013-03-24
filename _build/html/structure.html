@@ -1,6 +1,4 @@
 
-
-
 <!DOCTYPE html>
 
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Алфавитный указатель &mdash; openstack 1.0 documentation</title>
+    <title>Подготовка к установке &mdash; openstack 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/basic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -87,15 +85,15 @@
 </li>
             <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown">Навигация <b class="caret"></b></a>
-  <ul class="dropdown-menu localtoc"></ul>
+  <ul class="dropdown-menu localtoc"><ul>
+<li><a class="reference internal" href="#">Подготовка к установке</a></li>
+</ul>
+</ul>
 </li>
           
           
-
-   
             
           
-
         </ul>
 
         
@@ -112,11 +110,16 @@
 </div>
 
   
-
-<h1 id="index">Алфавитный указатель</h1>
-
-<div class="genindex-jumpbox">
- 
+  <div class="section" id="id1">
+<h1>Подготовка к установке<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>В данном руководстве предлагается структура облака, изображенная на рисунке, в которой все облачные сервисы, кроме вычислительного, расположены на одном узле, контроллере, к которому по локальной сети подключаются вычислительные узлы.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/first.png"><img alt="Структура облака" src="_images/first.png" style="width: 541.2px; height: 414.6px;" /></a>
+<p class="caption"><strong>Структура облачной системы</strong></p>
+</div>
+<p>Вычислительный сервис nova-compute использует гипервизор <a class="reference external" href="http://www.linux-kvm.org/page/Main_Page">KVM</a></p>
+<p>Публичным и приватным адресам вируальных машин с использованием <a class="reference external" href="http://mydns.bboy.net/">MyDns</a> автоматически выдаются доменные имена.</p>
+<p>Хранилище образов использует Swift</p>
 </div>
 
 
