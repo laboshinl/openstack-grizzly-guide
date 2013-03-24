@@ -1,15 +1,5 @@
 Руководство по установке и настройке OpenStack
 ========================================================================
- 
-.. sidebar:: Содержание
-
-	.. toctree::
-	   :maxdepth: 3
-	   
-	   prerequisite
-	   manual
-	   automatic
-	   usage
    
 `OpenStack <http://www.openstack.org/>`_ — это комплекс проектов свободного (`Apache License, Version 2.0 <http://www.apache.org/licenses/LICENSE-2.0>`_) программного обеспечения, предназначенного для создания вычислительных облаков и облачных хранилищ.
 

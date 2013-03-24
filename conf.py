@@ -39,7 +39,7 @@ language = 'ru'
 #source_encoding = 'utf-8-sig'
 
 # The master toctree document.
-master_doc = 'README'
+master_doc = 'openstack-grizzly-guide'
 
 # General information about the project.
 project = u'openstack'
@@ -209,7 +209,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('README', 'openstack.tex', u'Руководство по установке и настройке OpenStack',
+  ('openstack-grizzly-guide', 'openstack.tex', u'Руководство по установке и настройке OpenStack',
    u'Леонид Лабошин', 'manual'),
 ]
 
@@ -239,7 +239,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('README', 'openstack', u'openstack Documentation',
+    ('openstack-grizzly-guide', 'openstack', u'openstack Documentation',
      [u'Leonid Laboshin'], 1)
 ]
 
@@ -253,7 +253,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('README', 'openstack', u'openstack Documentation',
+  ('openstack-grizzly-guide', 'openstack', u'openstack Documentation',
    u'Leonid Laboshin', 'openstack', 'One line description of project.',
    'Miscellaneous'),
 ]
